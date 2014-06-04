@@ -105,5 +105,5 @@ Keep track of development and community news.
 
 ## License
 
-ForceDirectedLayout is released under [GPL, version 2.0](http://www.gnu.org/licenses/gpl-2.0.html)
+jquery.template.js is released under [GPL, version 2.0](http://www.gnu.org/licenses/gpl-2.0.html)
 
