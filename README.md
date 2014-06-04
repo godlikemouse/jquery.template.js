@@ -71,6 +71,8 @@ Next in JavaScript initialize the template, then bind the data list to the templ
 	var renderedTemplate = employeeListTemplate.bind(data);
 	$("#employee-list").append(renderedTemplate);
 
+In this example the dt/dd list is created with an if check on the class of the dt element.  When the item.type is "programmer", the class attribute is set to gray, otherwise it is set to black.  The list of 3 items is iterated over replacing all appropriate values before being inserted into the dl element.
+
 ### Storing data
 
 In this example data will be stored as attributes and as jQuery attribute objects.
