@@ -21,7 +21,7 @@ Next in JavaScript initialize the template, then bind data to the template and r
 
 	var myTemplate = $("#my-template").template();
 	var data = [{first_name: "Jason", last_name: "Graves"}];
-	var renderedTemplate = myTemplate.bind();
+	var renderedTemplate = myTemplate.bind(data);
 	$("body").append(renderedTemplate);
 
 ### A Bit More Complicated
