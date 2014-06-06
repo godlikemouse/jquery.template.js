@@ -94,6 +94,10 @@ $.fn.template = function(){
 		$(items).each(function(){
 			s.append( inspect($(_element.html()), this) );
 		});
+
+		if(items == undefined || items.length == 0)
+			s.append(_element.html());
+
 		return s.children();
 	}
 
