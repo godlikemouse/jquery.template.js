@@ -59,8 +59,8 @@ $.fn.template = function(){
 			$(attributes).each(function(){
 				var name = this.nodeName;
 
-				var value = parse(this.nodeValue, binding);
-				this.nodeValue = value;
+				var value = parse(this.value, binding);
+				this.value = value;
 
 				if(name.indexOf("data-") >= 0){
 					if(typeof value == "object"){
