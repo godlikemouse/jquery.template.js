@@ -41,7 +41,7 @@ Create a definition list and an associated template with some embedded rules.
 
 Next in JavaScript initialize the template, then bind the data list to the template and render.
 
-	var employeeListTemplate = $("#employee-list").template();
+	var employeeListTemplate = $("#list-template").template();
 	var data = [
 		{
 			item: {
