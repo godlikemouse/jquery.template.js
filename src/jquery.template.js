@@ -92,7 +92,14 @@ $.fn.template = function(){
 	_ref.bind = function(items){
 		var s = $("<p>");
 		$(items).each(function(){
-			s.append( inspect($(_element.html()), this) );
+			//handle IE stripping invalid styles
+			var html = _element.html();
+			var tokens = html.match(/style\=".*\{.*?\}?"/gm);
+			for(var i in tokens){
+				html = html.replace(tokens[i], parse(tokens[i], this));
+			}
+
+			s.append( inspect($(html), this) );
 		});
 
 		if(items == undefined || items.length == 0)
