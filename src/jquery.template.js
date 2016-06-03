@@ -18,13 +18,26 @@
  * along with the jquery.template.js plugin. If not, see http://www.gnu.org/licenses/.
  */
 
-$.fn.template = function(){
+$.fn.template = function(options){
 
 	var _ref = this;
 	var _element = $(this);
 
+	var _defaultOptions = {
+		onBind: function(items){},
+		onPreRender: function(element, binding){}
+	};
+
+	options = $.extend(true, _defaultOptions, options);
+
 	//Method for parsing and evaluating
 	function parse(s, binding){
+
+		//scope level template function for chaining templates
+		function template(selector, bindingData){
+			if(!bindingData) bindingData = binding;
+			return $(selector).template().bind(bindingData);
+		}
 
 		if(s.indexOf("{") >= 0 && s.indexOf("}") >= 0){
 
@@ -59,6 +72,7 @@ $.fn.template = function(){
 			$(attributes).each(function(){
 				var name = this.nodeName;
 
+				options.onPreRender(this, binding);
 				var value = parse(this.value, binding);
 				this.value = value;
 
@@ -72,10 +86,12 @@ $.fn.template = function(){
 			});
 
 			node.contents().each(function(){
+				options.onPreRender(this, binding);
 				inspect($(this), binding);
 			});
 
 			if(node.prop("nodeType") !== 1){
+				options.onPreRender(this, binding);
 				var v = parse(node.text(), binding);
 
 				if(typeof v == "object")
@@ -90,20 +106,28 @@ $.fn.template = function(){
 
 	//Method for binding a list of objects to the template
 	_ref.bind = function(items){
-		var s = $("<p>");
-		$(items).each(function(){
-			//handle IE stripping invalid styles
-			var html = _element.html();
-			var tokens = html.match(/style\=".*\{.*?\}?"/gm);
-			for(var i in tokens){
-				html = html.replace(tokens[i], parse(tokens[i], this));
-			}
 
-			s.append( inspect($(html), this) );
-		});
+		try{
+			options.onBind(items);
 
-		if(items == undefined || items.length == 0)
-			s.append(_element.html());
+			var s = $("<p>");
+			$(items).each(function(){
+				//handle IE stripping invalid styles
+				var html = _element.html();
+				var tokens = html.match(/style\=".*\{.*?\}?"/gm);
+				for(var i in tokens){
+					html = html.replace(tokens[i], parse(tokens[i], this));
+				}
+
+				s.append( inspect($(html), this) );
+			});
+
+			if(items == undefined || items.length == 0)
+				s.append(_element.html());
+		}
+		catch(ex){
+			console.error("Error in jquery.template.js at bind: " + ex, _ref);
+		}
 
 		return s.children();
 	}
