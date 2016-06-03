@@ -98,6 +98,55 @@ Next in JavaScript initialize the template, then bind the data to the template a
 
 In this example, the data-id attribute receives the actual value of the item.id ("data-example-1"), the inner text of the div element receives the actual value of the item.title ("Data Example") and the data-item attribute actually gets set the to item object itself by use of the jQuery $.data("item", binding.item) call.
 
+### Template chaining
+
+In this example a parent template will make use of a child template while iterating data.
+
+	<script language="text/template" id="parent-template">
+	<div class="parent-container">{ template("child-template", binding.item) }</div>
+	</script>
+
+	<script language="text/template" id="child-template">
+	<div class="first-name">{ binding.first_name }</div>
+	<div class="last-name">{ binding.last_name }</div>
+	<div class="type">{ binding.type }</div>
+	<div class="description">{ binding.description }</div>
+	</script>
+
+Next in JavaScript initialize the parent template, pass the data and let'er rip.
+
+	var parentTemplate = $("#parent-template").template();
+	var data = [
+		{
+			item: {
+				first_name: "Jason",
+				last_name: "Graves",
+				type: "programmer",
+				description: "Musician, coder, nerd extrodinaire."
+			}
+		},
+		{
+			item: {
+				first_name: "Bob",
+				last_name: "Dobalina",
+				type: "drone",
+				description: "Food for a song, gets paged a lot."
+			}
+		},
+		{
+			item: {
+				first_name: "Nikola",
+				last_name: "Tesla",
+				type: "genius",
+				description: "Inventor, electrical engineer, mechanical engineer and futurist"
+			}
+		}
+	];
+	var renderedTemplate = parentTemplate.bind(data);
+	$("body").append(renderedTemplate);
+
+In this example, the parent template gets called directly in code, which in turn binds to child template.  The second parameter to the template function is optional, by default the current binding object will be passed unless otherwise specified.
+
 ## Community
 
 Keep track of development and community news.
