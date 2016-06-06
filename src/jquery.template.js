@@ -22,6 +22,7 @@ $.fn.template = function(options){
 
 	var _ref = this;
 	var _element = $(this);
+	var _cache = {};
 
 	var _defaultOptions = {
 		onBind: function(items){},
@@ -36,7 +37,9 @@ $.fn.template = function(options){
 		//scope level template function for chaining templates
 		function template(selector, bindingData){
 			if(!bindingData) bindingData = binding;
-			return $(selector).template().bind(bindingData);
+			if(!_cache[selector])
+				_cache[selector] = $(selector).template();
+			return _cache[selector].bind(bindingData);
 		}
 
 		if(s.indexOf("{") >= 0 && s.indexOf("}") >= 0){
