@@ -96,7 +96,7 @@ Next in JavaScript initialize the template, then bind the data to the template a
 	var renderedTemplate = myTemplate.bind(data);
 	$("body").append(renderedTemplate);
 
-In this example, the data-id attribute receives the actual value of the item.id ("data-example-1"), the inner text of the div element receives the actual value of the item.title ("Data Example") and the data-item attribute actually gets set the to item object itself by use of the jQuery $.data("item", binding.item) call.
+In this example, the data-id attribute receives the actual value of the item.id ("data-example-1"), the inner text of the div element receives the actual value of the item.title ("Data Example") and the data-item attribute actually gets set ton the item object itself by use of the jQuery $.data("item", binding.item) call.
 
 ### Template chaining
 
