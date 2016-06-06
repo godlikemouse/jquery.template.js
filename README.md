@@ -103,7 +103,7 @@ In this example, the data-id attribute receives the actual value of the item.id 
 In this example a parent template will make use of a child template while iterating data.
 
 	<script language="text/template" id="parent-template">
-	<div class="parent-container">{ template("child-template", binding.item) }</div>
+	<div class="parent-container">{ template("#child-template", binding.item) }</div>
 	</script>
 
 	<script language="text/template" id="child-template">
