@@ -24,6 +24,10 @@ $.fn.template = function(options){
 	var _element = $(this);
 	var _cache = {};
 
+	var engine = {
+		index: 0
+	};
+
 	var _defaultOptions = {
 		onBind: function(items){},
 		onPreRender: function(element, binding){}
@@ -114,13 +118,15 @@ $.fn.template = function(options){
 			options.onBind(items);
 
 			var s = $("<p>");
-			$(items).each(function(){
+			$(items).each(function(index){
 				//handle IE stripping invalid styles
 				var html = _element.html();
 				var tokens = html.match(/style\=".*\{.*?\}?"/gm);
 				for(var i in tokens){
 					html = html.replace(tokens[i], parse(tokens[i], this));
 				}
+
+				engine.index = index;
 
 				s.append( inspect($(html), this) );
 			});
