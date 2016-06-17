@@ -117,6 +117,9 @@ $.fn.template = function(options){
 		try{
 			options.onBind(items);
 
+			//force a default parse if items is empty
+			if(!items) items = {};
+
 			var s = $("<p>");
 			$(items).each(function(index){
 				//handle IE stripping invalid styles
