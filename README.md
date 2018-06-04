@@ -147,6 +147,28 @@ Next in JavaScript initialize the parent template, pass the data and let'er rip.
 
 In this example, the parent template gets called directly in code, which in turn binds to child template.  The second parameter to the template function is optional, by default the current binding object will be passed unless otherwise specified.
 
+## Options
+
+The following table specifies the options available to be used in conjunction with the plugin.
+
+| Name | Description |
+| ---- | ----------- |
+| renderEmpty | Specifies whether or not to render the template with binding placeholder information. When false, the template will omit empty items/bindings. (default: false) |
+| onBind | Specifies the callback to be used in conjuction with binding. onBind(items) |
+| onPreRender | Specifies the callback to be used before the items/bindings are rendered. onPreRender(element, binding). |
+
+    var template = $("#my-template").template({
+		onBind: function(items){
+			$(items).each(function(){
+				//do before binding
+			});
+		},
+		onPreRender: function(element, binding){
+			//do something before rendering
+		}
+	});
+
+
 ## Community
 
 Keep track of development and community news.

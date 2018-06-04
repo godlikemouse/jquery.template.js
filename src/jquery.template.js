@@ -30,7 +30,8 @@ $.fn.template = function(options){
 
 	var _defaultOptions = {
 		onBind: function(items){},
-		onPreRender: function(element, binding){}
+		onPreRender: function(element, binding){},
+		renderEmpty: false
 	};
 
 	options = $.extend(true, _defaultOptions, options);
@@ -118,7 +119,7 @@ $.fn.template = function(options){
 			options.onBind(items);
 
 			//force a default parse if items is empty
-			if(!items) items = {};
+			if(!items) items = [];
 
 			var s = $("<p>");
 			$(items).each(function(index){
@@ -134,8 +135,11 @@ $.fn.template = function(options){
 				s.append( inspect($(html), this) );
 			});
 
-			if(items == undefined || items.length == 0)
-				s.append(_element.html());
+			if(items == undefined || items.length == 0){
+				if(options.renderEmpty){
+					s.append(_element.html());
+				}
+			}
 		}
 		catch(ex){
 			console.error("Error in jquery.template.js at bind: " + ex, _ref);
