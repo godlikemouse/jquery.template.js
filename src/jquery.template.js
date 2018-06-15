@@ -102,10 +102,17 @@ $.fn.template = function(options){
 				options.onPreRender(this, binding);
 				var v = parse(node.text(), binding);
 
-				if(typeof v == "object")
+				if(typeof v == "object"){
 					node.replaceWith(v);
-				else
-					node.get(0).nodeValue = v;
+                }
+				else{
+                    //if html replace node, otherwise use text value
+                    var $v = $(v);
+                    if($v.length)
+                        node.replaceWith($v);
+                    else
+					    node.get(0).nodeValue = v;
+                }
 			}
 		});
 
