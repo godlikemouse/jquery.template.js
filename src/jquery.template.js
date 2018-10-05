@@ -23,6 +23,7 @@ $.fn.template = function(options){
 	var _ref = this;
 	var _element = $(this);
 	var _cache = {};
+    var _placeholder = $("<p>");
 
 	var engine = {
 		index: 0
@@ -73,15 +74,17 @@ $.fn.template = function(options){
 	//Method for inspecting the node and children
 	function inspect(nodes, binding){
 
-		nodes.each(function(){
-			var node = $(this);
+        for(var ni=0; ni<nodes.length; ni++){
+            var node = $(nodes[ni]);
 
 			var attributes = node.get(0).attributes;
 			$(attributes).each(function(){
 				var name = this.nodeName;
 
 				options.onPreRender(this, binding);
+
 				var value = parse(this.value, binding);
+
 				this.value = value;
 
 				if(name.indexOf("data-") >= 0){
@@ -93,28 +96,24 @@ $.fn.template = function(options){
 				}
 			});
 
-			node.contents().each(function(){
-				options.onPreRender(this, binding);
-				inspect($(this), binding);
-			});
+            var contents = node.contents();
+            for(var ci=0; ci<contents.length; ci++){
+                options.onPreRender(contents[ci], binding);
+                inspect($(contents[ci]), binding);
+            }
 
 			if(node.prop("nodeType") !== 1){
-				options.onPreRender(this, binding);
+                options.onPreRender(node, binding);
 				var v = parse(node.text(), binding);
 
 				if(typeof v == "object"){
 					node.replaceWith(v);
                 }
 				else{
-                    //if html replace node, otherwise use text value
-                    var $v = $(v);
-                    if($v.length)
-                        node.replaceWith($v);
-                    else
-					    node.get(0).nodeValue = v;
+                    node.replaceWith( _placeholder.html(v).html() );
                 }
 			}
-		});
+        }
 
 		return nodes;
 	}
@@ -130,6 +129,7 @@ $.fn.template = function(options){
 
 			var s = $("<p>");
 			$(items).each(function(index){
+
 				//handle IE stripping invalid styles
 				var html = _element.html();
 				var tokens = html.match(/style\=".*\{.*?\}?"/gm);
