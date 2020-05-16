@@ -147,6 +147,36 @@ Next in JavaScript initialize the parent template, pass the data and let'er rip.
 
 In this example, the parent template gets called directly in code, which in turn binds to child template.  The second parameter to the template function is optional, by default the current binding object will be passed unless otherwise specified.
 
+### Conditional parameters
+
+In this example conditional parameters will be used to determine whether or not a parameter shows up based on the evaluated parameter value.
+
+	<select id="my-select"></select>
+
+	<script language="text/template" id="options-template">
+		<option data-item={binding} if-selected="{binding.isSelected}" value="{binding.value}">{binding.label}</option>
+	</script>
+	
+	<script language="javascript">
+		var optionsTemplate = $("#options-template").template();
+		var data = [
+			{
+				isSelected: true,
+				value: "selected",
+				label: "I'm selected"
+			},
+			{
+				isSelected: false,
+				value "not-selected",
+				label: "I am not"
+			}
+		];
+		var renderedTemplate = optionsTemplate.bind(data);
+		$("#my-select").append(renderedTemplate);
+	</script>
+	
+In this example, a select / dropdown list is populated with options using a template.  The if-selected attribute of the option tag will only be rendered as "selected" when the attribute value evaluates as truthy true, otherwise the attribute will be removed altogether.  In this way, if-attribute conditionals allow one to have attributes displayed in the DOM based on truthy values.
+
 ## Options
 
 The following table specifies the options available to be used in conjunction with the plugin.
