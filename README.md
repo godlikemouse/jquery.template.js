@@ -147,9 +147,9 @@ Next in JavaScript initialize the parent template, pass the data and let'er rip.
 
 In this example, the parent template gets called directly in code, which in turn binds to child template.  The second parameter to the template function is optional, by default the current binding object will be passed unless otherwise specified.
 
-### Conditional parameters
+### Conditional attribute
 
-In this example conditional parameters will be used to determine whether or not a parameter shows up based on the evaluated parameter value.
+In this example attribute will be used to determine whether or not an id displayed in the DOM based on the evaluated attribute value.
 
 	<select id="my-select"></select>
 
