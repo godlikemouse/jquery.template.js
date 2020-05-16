@@ -87,6 +87,15 @@ $.fn.template = function(options){
 
 				this.value = value;
 
+				//remove conditional attribute if its value is a falsy value
+				if(name.indexOf("if-") == 0) {					
+					var attrName = name.replace("if-", "");
+					node.removeAttr(name);
+
+					if(value)
+						node.attr(attrName, value)
+				} 
+
 				if(name.indexOf("data-") >= 0){
 					if(typeof value == "object"){
 						var dataName = name.replace("data-","");
